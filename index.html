@@ -69,7 +69,7 @@ header h1 { font-size: clamp(30px, 6vw, 40px); line-height: 1.2; }
 .block ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
 .subgroups { display: flex; flex-direction: column; gap: 14px; }
 .subgroup { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.sublabel { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.sublabel { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; flex-direction: column; gap: 2px; }
 .sublabel small { font-size: 12px; font-weight: 400; color: var(--muted); }
 .files { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .file { display: flex; flex-direction: column; gap: 6px; min-width: 0; color: var(--ink);
@@ -80,8 +80,10 @@ header h1 { font-size: clamp(30px, 6vw, 40px); line-height: 1.2; }
 .file .name { font-size: 13px; overflow-wrap: anywhere; line-height: 1.4; }
 .file .tag { align-self: flex-start; }
 .featured-block .sublabel { color: var(--accent); }
-.notes-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
-.notes-row .files { grid-template-columns: 1fr; }
+.notes-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+.notes-row .block { height: 100%; }
+.notes-row .files { grid-template-columns: 1fr; flex: 1; }
+.notes-row .file { height: 100%; }
 @media (max-width: 340px) { .notes-row { grid-template-columns: 1fr; } }
 .file.featured { border: 2px solid var(--accent); background: var(--accent-soft); padding: 7px; box-shadow: 0 6px 18px -10px var(--accent); }
 .file.featured .name { font-weight: 600; }
@@ -114,7 +116,7 @@ header h1 { font-size: clamp(30px, 6vw, 40px); line-height: 1.2; }
 (function () {
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
   var EXT_OF = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/webp': 'webp', 'application/pdf': 'pdf', 'video/mp4': 'mp4', 'video/webm': 'webm' };
-  var KINDS = [['summary', '정리본', '레슨 뒤에 깔끔하게 정리한 필기'], ['class', '수업본', '수업하면서 직접 쓴 필기'], ['other', '기타 자료', '']];
+  var KINDS = [['summary', '정리본', '깔끔하게 정리한 필기'], ['class', '수업본', '수업 중 직접 쓴 필기'], ['other', '기타 자료', '']];
 
   var state;
   try { state = JSON.parse(document.getElementById('lesson-data').textContent); } catch (e) { state = { lessons: [] }; }
