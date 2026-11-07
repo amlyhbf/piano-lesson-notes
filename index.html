@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>반주 레슨 노트</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"><style>
+/* Layout: one reading column — header, this week's homework, then lessons newest first */
+:root {
+  --bg: #F4F5F8;
+  --surface: #FFFFFF;
+  --ink: #1B1F2A;
+  --muted: #5E6576;
+  --line: #E0E3EA;
+  --accent: #2F4FC4;
+  --accent-soft: #E9EDFB;
+  --warm: #B8442A;
+  --warm-soft: #FBEEE9;
+  --scrim: rgba(15, 18, 26, 0.78);
+  --paper: #FFFFFF;
+  --font-display: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111319; --surface: #1A1D25; --ink: #E7E9F0; --muted: #9AA1B3; --line: #2B2F3A;
+    --accent: #93A6F6; --accent-soft: #222A46; --warm: #F0907A; --warm-soft: #3A241F; --scrim: rgba(0, 0, 0, 0.85);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111319; --surface: #1A1D25; --ink: #E7E9F0; --muted: #9AA1B3; --line: #2B2F3A;
+  --accent: #93A6F6; --accent-soft: #222A46; --warm: #F0907A; --warm-soft: #3A241F; --scrim: rgba(0, 0, 0, 0.85);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 32px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; text-wrap: balance; margin: 0; }
+.eyebrow { font-size: 12px; letter-spacing: 0.12em; color: var(--muted); font-weight: 600; }
+header { display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+header h1 { font-size: clamp(30px, 6vw, 40px); line-height: 1.2; }
+.btn { font: inherit; font-size: 14px; font-weight: 600; border-radius: 10px; padding: 9px 16px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { border-color: var(--accent); }
+.btn.small { padding: 5px 12px; font-size: 13px; }
+.btn:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.homework { background: var(--warm-soft); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.homework h2 { font-size: 20px; }
+.homework .from { font-size: 13px; color: var(--muted); }
+.hw-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.hw-list li::marker { color: var(--warm); }
+.section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.section-title h2 { font-size: 22px; }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.lessons { display: flex; flex-direction: column; gap: 20px; }
+.lesson { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.lesson-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.no { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--accent); background: var(--accent-soft); padding: 2px 12px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+.date { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.song { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.song h3 { font-size: 24px; line-height: 1.3; }
+.key { font-size: 13px; font-weight: 600; color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; }
+.block { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.block-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); }
+.block ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.subgroups { display: flex; flex-direction: column; gap: 14px; }
+.subgroup { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.sublabel { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.sublabel small { font-size: 12px; font-weight: 400; color: var(--muted); }
+.files { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.file { display: flex; flex-direction: column; gap: 6px; min-width: 0; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: var(--bg); font: inherit; text-align: left; cursor: pointer; }
+.file:hover { border-color: var(--accent); }
+.file .thumb { aspect-ratio: 4 / 3; width: 100%; max-width: 100%; border-radius: 6px; background: var(--paper); object-fit: cover; object-position: top; display: block; }
+.file .doc { aspect-ratio: 4 / 3; width: 100%; border-radius: 6px; background: var(--warm-soft); color: var(--warm); display: grid; place-items: center; font-weight: 700; letter-spacing: 0.06em; }
+.file .name { font-size: 13px; overflow-wrap: anywhere; line-height: 1.4; }
+.file .tag { align-self: flex-start; }
+.featured-block .sublabel { color: var(--accent); }
+.notes-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+.notes-row .files { grid-template-columns: 1fr; }
+@media (max-width: 340px) { .notes-row { grid-template-columns: 1fr; } }
+.file.featured { border: 2px solid var(--accent); background: var(--accent-soft); padding: 7px; box-shadow: 0 6px 18px -10px var(--accent); }
+.file.featured .name { font-weight: 600; }
+.tag { font-size: 11px; font-weight: 600; color: var(--warm); background: var(--warm-soft); border-radius: 4px; padding: 0 6px; }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 16px; padding: 28px; color: var(--muted); text-align: center; }
+/* file viewer */
+.viewer { position: fixed; inset: 0; background: var(--scrim); z-index: 30; display: flex; flex-direction: column; }
+.viewer-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--surface); color: var(--ink);
+  padding: calc(10px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); }
+.viewer-bar .vname { flex: 1 1 200px; min-width: 0; font-weight: 600; font-size: 14px; overflow-wrap: anywhere; }
+.viewer-msg { font-size: 13px; color: var(--muted); }
+.viewer-msg.err { color: var(--warm); }
+.viewer-body { flex: 1; overflow: auto; display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.viewer-body img, .viewer-body video { max-width: min(100%, 900px); height: auto; background: var(--paper); border-radius: 4px; display: block; }
+.viewer-body canvas { width: 100%; max-width: 900px; height: auto; background: var(--paper); border-radius: 4px; display: block; }
+.viewer-body .loading { color: var(--surface); font-size: 14px; padding: 40px 0; }
+@media (max-width: 520px) {
+  .wrap { padding-block: 28px 56px; }
+  .lesson { padding: 18px; }
+  .song h3 { font-size: 21px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .file { transition: border-color 0.15s; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div><script type="application/json" id="lesson-data">{"lessons": [{"id": "l1", "no": 1, "date": "2026-11-06", "song": "나의 안에 거하라", "key": "A장조", "sheets": [{"name": "나의 안에 거하라 (A키 원본 악보).png", "type": "image/png", "src": "files/l1-sheet.png"}, {"name": "다시 밤이 없겠고 (C키 원본 악보).jpg", "type": "image/jpeg", "hw": true, "src": "files/hw-dasi-bam-sheet.jpg"}], "learned": ["인트로(마지막 줄 ‘너를 사랑하는 네 여호와라’)가 끝나면 5도 세븐 E7을 쿵! 치고 1절로 들어가기", "1에서 4로 갈 때 중간에 1의 세븐을 넣으면 자연스럽다: A → A7 → D (A를 1로), E → E7 → A (E를 1로)", "하나의 법칙이 코드가 다른 두 진행에 똑같이 적용된다. 코드 하나를 숫자 하나로 단정하지 말고 가끔은 시선을 돌려 보기", "반주 리듬 3가지: ① 한 마디 4번 ② 한 마디 2번 ③ 아르페지오 + ①② 섞기", "인트로는 ③, 1절(벌스)은 ①로 치는 게 이상적"], "homework": ["1회차 필기본 보면서 복습하기", "새 곡 「다시 밤이 없겠고」 혼자 연습해 보기"], "files": [{"name": "나의 안에 거하라 A키 1회차 정리본.png", "type": "image/png", "kind": "summary", "src": "files/l1-summary.png"}, {"name": "나의 안에 거하라 1회차 수업본.jpg", "type": "image/jpeg", "kind": "class", "src": "files/l1-class.jpg"}]}]}</script><script>
+(function () {
+  var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  var EXT_OF = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/webp': 'webp', 'application/pdf': 'pdf', 'video/mp4': 'mp4', 'video/webm': 'webm' };
+  var KINDS = [['summary', '정리본', '레슨 뒤에 깔끔하게 정리한 필기'], ['class', '수업본', '수업하면서 직접 쓴 필기'], ['other', '기타 자료', '']];
+
+  var state;
+  try { state = JSON.parse(document.getElementById('lesson-data').textContent); } catch (e) { state = { lessons: [] }; }
+  if (!state || !Array.isArray(state.lessons)) state = { lessons: [] };
+
+  var downloadsApi = null;
+  var app = document.getElementById('app');
+
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      var v = attrs[k];
+      if (v == null || v === false) continue;
+      if (k === 'text') el.textContent = v;
+      else if (k === 'class') el.className = v;
+      else if (k.slice(0, 2) === 'on') el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      if (Array.isArray(c)) c.forEach(function (x) { if (x) el.appendChild(typeof x === 'string' ? document.createTextNode(x) : x); });
+      else el.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    }
+    return el;
+  }
+  function blobUrl(id) { return '/_blob/' + id; }
+  function fmtDate(s) {
+    if (!s) return '';
+    var d = new Date(s + 'T00:00:00');
+    if (isNaN(d)) return s;
+    return d.getFullYear() + '. ' + (d.getMonth() + 1) + '. ' + d.getDate() + '. (' + '일월화수목금토'[d.getDay()] + ')';
+  }
+  function sorted() { return state.lessons.slice().sort(function (a, b) { return (b.no || 0) - (a.no || 0); }); }
+
+  function fileTile(f, featured) {
+    var t = f.type || '';
+    var visual = t.indexOf('image/') === 0
+      ? h('img', { class: 'thumb', src: f.src, alt: '', loading: 'lazy' })
+      : h('span', { class: 'doc', text: t === 'application/pdf' ? 'PDF' : t.indexOf('video/') === 0 ? '영상' : '파일' });
+    return h('button', { class: featured === true ? 'file featured' : 'file', type: 'button', onclick: function () { openViewer(f); } },
+      visual, f.hw ? h('span', { class: 'tag', text: '숙제 곡' }) : null, h('span', { class: 'name', text: f.name }));
+  }
+  function fileBlock(label, list) {
+    if (!list || !list.length) return null;
+    return h('div', { class: 'block' }, h('span', { class: 'block-label', text: label }), h('div', { class: 'files' }, list.map(fileTile)));
+  }
+  function kindOf(f) { return f.kind === 'summary' || f.kind === 'class' ? f.kind : 'other'; }
+  function kindBlock(list, kind) {
+    var k = KINDS.filter(function (x) { return x[0] === kind; })[0];
+    var items = (list || []).filter(function (f) { return kindOf(f) === kind; });
+    if (!items.length) return null;
+    var featured = kind === 'summary';
+    return h('div', { class: featured ? 'block featured-block' : 'block' },
+      h('span', { class: 'sublabel' }, k[1], k[2] ? h('small', { text: k[2] }) : null),
+      h('div', { class: 'files' }, items.map(function (f) { return fileTile(f, featured); })));
+  }
+  function notesRow(list) {
+    var a = kindBlock(list, 'summary'), b = kindBlock(list, 'class');
+    if (!a && !b) return null;
+    return h('div', { class: 'notes-row' }, a, b);
+  }
+  function textBlock(label, list) {
+    if (!list || !list.length) return null;
+    return h('div', { class: 'block' }, h('span', { class: 'block-label', text: label }), h('ul', null, list.map(function (x) { return h('li', { text: x }); })));
+  }
+
+  function lessonCard(l) {
+    var top = h('div', { class: 'lesson-top' },
+      h('span', { class: 'no', text: (l.no || '?') + '회차' }),
+      l.date ? h('span', { class: 'date', text: fmtDate(l.date) }) : null);
+    var song = h('div', { class: 'song' }, h('h3', { text: l.song || '곡 미정' }), l.key ? h('span', { class: 'key', text: l.key }) : null);
+    return h('article', { class: 'lesson', id: 'lesson-' + l.no }, top, song,
+      fileBlock('악보', (l.sheets || []).filter(function (f) { return !f.hw; })),
+      notesRow(l.files),
+      textBlock('배운 것', l.learned), textBlock('숙제', l.homework),
+      kindBlock(l.files, 'other'));
+  }
+
+  function homeworkPanel(latest) {
+    if (!latest || !latest.homework || !latest.homework.length) return null;
+    var hwSheets = (latest.sheets || []).filter(function (f) { return f.hw; });
+    return h('section', { class: 'homework', 'aria-label': '이번 숙제' },
+      h('h2', { text: '다음 레슨까지' }),
+      h('span', { class: 'from', text: latest.no + '회차' + (latest.song ? ' · ' + latest.song : '') + ' 레슨에서' }),
+      h('ul', { class: 'hw-list' }, latest.homework.map(function (x) { return h('li', { text: x }); })),
+      hwSheets.length ? h('div', { class: 'files' }, hwSheets.map(fileTile)) : null);
+  }
+
+  function render() {
+    var list = sorted();
+    app.textContent = '';
+    var wrap = h('div', { class: 'wrap' });
+    wrap.appendChild(h('header', null,
+      h('span', { class: 'eyebrow', text: '교회 반주 레슨' }),
+      h('h1', { text: '반주 레슨 노트' })));
+    var hw = homeworkPanel(list[0]);
+    if (hw) wrap.appendChild(hw);
+    wrap.appendChild(h('div', { class: 'section-title' }, h('h2', { text: '레슨 기록' }), h('span', { class: 'count', text: '총 ' + list.length + '회' })));
+    if (!list.length) wrap.appendChild(h('div', { class: 'empty' }, '아직 기록된 레슨이 없어요.'));
+    else wrap.appendChild(h('div', { class: 'lessons' }, list.map(lessonCard)));
+    app.appendChild(wrap);
+  }
+
+  /* ---------- file viewer (image · PDF · video) ---------- */
+  var viewer = null;
+  function closeViewer() { if (viewer) { viewer.remove(); viewer = null; } }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeViewer(); });
+
+  var pdfjsReady = null;
+  function loadScript(src) {
+    return new Promise(function (ok, fail) {
+      var s = document.createElement('script');
+      s.src = src; s.onload = ok; s.onerror = fail;
+      document.head.appendChild(s);
+    });
+  }
+  function loadPdfJs() {
+    if (!pdfjsReady) {
+      pdfjsReady = loadScript(PDFJS + 'pdf.min.js')
+        .then(function () { return loadScript(PDFJS + 'pdf.worker.min.js'); })
+        .then(function () { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js'; return window.pdfjsLib; });
+      pdfjsReady.catch(function () { pdfjsReady = null; });
+    }
+    return pdfjsReady;
+  }
+
+  function saveFile(f, msg) {
+    if (!downloadsApi) return;
+    msg.className = 'viewer-msg'; msg.textContent = '파일을 준비하는 중…';
+    var ext = EXT_OF[f.type] || '';
+    var name = f.name;
+    if (ext && name.toLowerCase().slice(-(ext.length + 1)) !== '.' + ext) name += '.' + ext;
+    fetch(f.src).then(function (r) { if (!r.ok) throw new Error('fetch'); return r.blob(); })
+      .then(function (b) { return downloadsApi.save({ filename: name, data: b }); })
+      .then(function () { msg.textContent = '저장했어요.'; }, function (err) {
+        var code = err && err.code;
+        msg.className = code === 'declined' ? 'viewer-msg' : 'viewer-msg err';
+        msg.textContent = code === 'declined' ? '' : code === 'rate_limited' ? '잠시 후 다시 눌러 주세요.' : '저장하지 못했어요.';
+      });
+  }
+
+  function openViewer(f) {
+    closeViewer();
+    var t = f.type || '';
+    var msg = h('span', { class: 'viewer-msg', role: 'status' });
+    var body = h('div', { class: 'viewer-body' });
+    viewer = h('div', { class: 'viewer', role: 'dialog', 'aria-label': f.name },
+      h('div', { class: 'viewer-bar' },
+        h('span', { class: 'vname', text: f.name }), msg,
+        h('a', { class: 'btn small', href: f.src, download: f.name }, '내 기기에 저장'),
+        h('button', { class: 'btn small', type: 'button', onclick: closeViewer }, '닫기')),
+      body);
+    viewer.addEventListener('click', function (e) { if (e.target === body) closeViewer(); });
+    document.body.appendChild(viewer);
+
+    if (t.indexOf('image/') === 0) {
+      body.appendChild(h('img', { src: f.src, alt: f.name }));
+    } else if (t.indexOf('video/') === 0) {
+      body.appendChild(h('video', { src: f.src, controls: true, playsinline: true }));
+    } else if (t === 'application/pdf') {
+      var loading = h('p', { class: 'loading', text: 'PDF를 불러오는 중…' });
+      body.appendChild(loading);
+      var mine = viewer;
+      Promise.all([loadPdfJs(), fetch(f.src).then(function (r) { if (!r.ok) throw new Error('fetch'); return r.arrayBuffer(); })])
+        .then(function (r) { return r[0].getDocument({ data: new Uint8Array(r[1]) }).promise; })
+        .then(function (pdf) {
+          loading.remove();
+          (function page(i) {
+            if (i > pdf.numPages || viewer !== mine) return;
+            pdf.getPage(i).then(function (p) {
+              var cssW = Math.min(body.clientWidth - 32, 900);
+              var base = p.getViewport({ scale: 1 });
+              var vp = p.getViewport({ scale: (cssW / base.width) * Math.min(window.devicePixelRatio || 1, 2.5) });
+              var c = h('canvas', { 'aria-label': i + '쪽' });
+              c.width = Math.floor(vp.width); c.height = Math.floor(vp.height);
+              body.appendChild(c);
+              var ctx = c.getContext('2d');
+              ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, c.width, c.height);
+              return p.render({ canvasContext: ctx, viewport: vp }).promise;
+            }).then(function () { page(i + 1); });
+          })(1);
+        })
+        .catch(function () {
+          loading.remove();
+          msg.className = 'viewer-msg err';
+          msg.textContent = 'PDF를 여기서 보여주지 못했어요.';
+        });
+    } else {
+      body.appendChild(h('p', { class: 'loading', text: '이 형식은 미리 볼 수 없어요.' }));
+    }
+  }
+
+  render();
+
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('downloads').then(function (d) { downloadsApi = d; }, function () {});
+  }
+})();
+</script>
+
+</body>
+</html>
